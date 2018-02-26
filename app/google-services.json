@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "636392776785",
+    "firebase_url": "https://bfhslibrary-5faae.firebaseio.com",
+    "project_id": "bfhslibrary-5faae",
+    "storage_bucket": "bfhslibrary-5faae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636392776785:android:02a90a9a089ac1cc",
+        "android_client_info": {
+          "package_name": "net.huntersharpe.bfhslibrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636392776785-bt8amv6b53nunpt6aaoaonjc6jof1pc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.huntersharpe.bfhslibrary",
+            "certificate_hash": "8fd48fc4eba8da17ebb804b0a1d508ca7fdeffd0"
+          }
+        },
+        {
+          "client_id": "636392776785-i4oc19nfbepefl71tmjs3e2ehq8ihc8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.huntersharpe.bfhslibrary",
+            "certificate_hash": "f099b95c25fff1c9a7745d0b74d71ce5c3624a4f"
+          }
+        },
+        {
+          "client_id": "636392776785-lv0j7sdfsovegm0kgomjcpkdrh8b8e5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcMA0L1jwd5vxfq-gGhUsA4AuFJ2_hxeE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636392776785-lv0j7sdfsovegm0kgomjcpkdrh8b8e5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

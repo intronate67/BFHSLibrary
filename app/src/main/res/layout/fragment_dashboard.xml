@@ -1,0 +1,152 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.huntersharpe.bfhslibrary.Dashboard">
+
+    <Button
+        android:id="@+id/signOutButton"
+        android:layout_width="267dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/signOutButtonLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkOutInitButton" />
+
+    <Button
+        android:id="@+id/checkOutInitButton"
+        android:layout_width="267dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/signOutButton"
+        android:layout_alignEnd="@+id/signOutButton"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="104dp"
+        android:text="@string/checkOutLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbaValue" />
+
+    <EditText
+        android:id="@+id/barcodeTextbox"
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkOutInitButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/barcodeEmptyLabel"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <Button
+        android:id="@+id/scanButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/barcodeTextbox"
+        android:layout_below="@+id/checkOutInitButton"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/scanButtonLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <TextView
+        android:id="@+id/bookTitlePlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/barcodeTextbox"
+        android:layout_alignTop="@+id/checkOutInitButton"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/bookAutherPlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/bookTitlePlaceholder"
+        android:layout_below="@+id/checkOutInitButton"
+        android:textSize="18sp" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bookTitlePlaceholder"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sbtLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/sbtText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeTextbox" />
+
+    <TextView
+        android:id="@+id/sbaLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/sbaText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbtLabel" />
+
+    <TextView
+        android:id="@+id/sbtValue"
+        android:layout_width="107dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/nullText"
+        app:layout_constraintStart_toEndOf="@+id/sbtLabel"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeTextbox" />
+
+    <TextView
+        android:id="@+id/sbaValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/nullText"
+        app:layout_constraintStart_toEndOf="@+id/sbaLabel"
+        app:layout_constraintTop_toBottomOf="@+id/sbtValue" />
+
+    <TextView
+        android:id="@+id/ccotLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/ccotText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbaLabel" />
+
+    <TextView
+        android:id="@+id/ccotValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/nullText"
+        app:layout_constraintStart_toEndOf="@+id/ccotLabel"
+        app:layout_constraintTop_toBottomOf="@+id/sbaValue" />
+
+</android.support.constraint.ConstraintLayout>

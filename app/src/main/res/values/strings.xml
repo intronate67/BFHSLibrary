@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">BFHSLibrary</string>
+    <string name="mainScreenLabel">Big Foot High School Library</string>
+    <string name="loginButtonLabel">Sign In With Google</string>
+    <string name="mainScreenInfo">\n\n\nLibrary Managment App\n Written in Java\n For FBLA\n Author: Hunter Sharpe</string>
+    <string name="server_client_id">636392776785-lv0j7sdfsovegm0kgomjcpkdrh8b8e5f.apps.googleusercontent.com</string>
+    <string name="text_home">Home</string>
+    <string name="text_dashboard">Dashboard</string>
+    <string name="text_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profPicDesc">Profile Picture</string>
+    <string name="welcomeBackLabel">Welcome Back</string>
+    <string name="user">User</string>
+    <string name="signOutButtonLabel">Sign Out</string>
+    <string name="ccobLabel">Current Checked Out Books</string>
+    <string name="prbLabel">Previously Read Books</string>
+    <string name="barcodeEmptyLabel">Search or Scan</string>
+    <string name="scanButtonLabel">Scan</string>
+    <string name="checkOutLabel">Check Out</string>
+    <string name="search_hint">Book Name</string>
+    <string name="sbtText">Selected Book Title:</string>
+    <string name="sbaText">Selected Book Author:</string>
+    <string name="ccotText">Currently Checked Out To:</string>
+    <string name="nullText">Null</string>
+</resources>

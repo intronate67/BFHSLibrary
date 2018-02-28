@@ -51,9 +51,11 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        /*if(account != null){
-            setContentView(R.layout.activity_home_screen2);
-        }*/
+        if(account != null){
+            Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(), "Welcome Back", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void authenticate(){

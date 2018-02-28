@@ -24,4 +24,6 @@
     <string name="sbaText">Selected Book Author:</string>
     <string name="ccotText">Currently Checked Out To:</string>
     <string name="nullText">Null</string>
+    <string name="topNotifEmpty">Horay! No Books Due</string>
+    <string name="emptyString" />
 </resources>

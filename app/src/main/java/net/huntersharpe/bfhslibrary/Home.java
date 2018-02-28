@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -25,6 +27,8 @@ public class Home extends Fragment {
 
     private static String profURL = "";
     private static Bitmap bm = null;
+    private TextView ccob1;
+    private DatabaseReference db;
 
     public Home() {
         // Required empty public constructor
@@ -56,7 +60,15 @@ public class Home extends Fragment {
             task.execute();
             imageView.setImageBitmap(bm);
         }
+        db = FirebaseDatabase.getInstance().getReference();
+        ccob1 = getView().findViewById(R.id.ccobTextView1);
+        ccob1.setText(getCcob(account.getId()));
     }
+
+    private String getCcob(String uid){
+        return "";
+    }
+
     private static class AsyncBitmapRequest extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... voids) {

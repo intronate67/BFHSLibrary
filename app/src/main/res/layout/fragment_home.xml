@@ -1,18 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/hsDiv"
+    android:id="@+id/dashConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.huntersharpe.bfhslibrary.Home">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView"
-        android:layout_marginTop="21dp"
-        android:background="@drawable/divider"
-        android:id="@+id/view" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -20,9 +12,14 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="83dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/profPicDesc"
-        android:src="?android:attr/alertDialogIcon" />
+        android:src="?android:attr/alertDialogIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBackTextView" />
 
     <TextView
         android:id="@+id/welcomeBackTextView"
@@ -30,9 +27,12 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/imageView"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/welcomeBackLabel"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/namePlaceholder"
@@ -40,20 +40,13 @@
         android:layout_height="60dp"
         android:layout_alignBaseline="@+id/welcomeBackTextView"
         android:layout_alignBottom="@+id/welcomeBackTextView"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/welcomeBackTextView"
         android:text="@string/user"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/ccobTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/welcomeBackTextView"
-        android:layout_below="@+id/view"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/ccobLabel"
-        android:textSize="18sp" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/welcomeBackTextView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/prbTextView"
@@ -61,8 +54,58 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/ccobTextView"
         android:layout_below="@+id/ccobTextView"
-        android:layout_marginTop="94dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/prbLabel"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ccobLinLay" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/ccobTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/namePlaceholder"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/ccobLabel"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <LinearLayout
+        android:id="@+id/ccobLinLay"
+        android:layout_width="304dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cell_shape"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ccobTextView">
+
+        <TextView
+            android:id="@+id/ccobTextView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nullText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="304dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/cell_shape"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prbTextView">
+
+        <TextView
+            android:id="@+id/prbTextView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nullText" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

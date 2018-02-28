@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/barcodeTextbox"
         android:layout_alignTop="@+id/checkOutInitButton"
-        android:textSize="24sp" />
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/bookAutherPlaceholder"
@@ -113,9 +113,11 @@
         android:id="@+id/sbtValue"
         android:layout_width="107dp"
         android:layout_height="42dp"
-        android:layout_marginStart="52dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="32dp"
         android:text="@string/nullText"
+        app:layout_constraintBottom_toTopOf="@+id/sbaValue"
         app:layout_constraintStart_toEndOf="@+id/sbtLabel"
         app:layout_constraintTop_toBottomOf="@+id/barcodeTextbox" />
 
@@ -123,9 +125,11 @@
         android:id="@+id/sbaValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
         android:layout_marginStart="38dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:text="@string/nullText"
+        app:layout_constraintBottom_toTopOf="@+id/ccotValue"
         app:layout_constraintStart_toEndOf="@+id/sbaLabel"
         app:layout_constraintTop_toBottomOf="@+id/sbtValue" />
 
@@ -143,9 +147,11 @@
         android:id="@+id/ccotValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="38dp"
         android:text="@string/nullText"
+        app:layout_constraintBottom_toTopOf="@+id/checkOutInitButton"
         app:layout_constraintStart_toEndOf="@+id/ccotLabel"
         app:layout_constraintTop_toBottomOf="@+id/sbaValue" />
 

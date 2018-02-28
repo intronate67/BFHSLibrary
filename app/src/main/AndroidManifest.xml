@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeScreenActivity" />
+        <activity android:name=".HomeScreenActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

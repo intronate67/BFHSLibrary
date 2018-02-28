@@ -1,10 +1,11 @@
 package net.huntersharpe.bfhslibrary;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,12 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -33,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.concurrent.ExecutionException;
 
 public class Dashboard extends Fragment {
@@ -40,7 +46,9 @@ public class Dashboard extends Fragment {
     private EditText barcodeTextbox;
     private TextView sbtValue;
     private TextView sbaValue;
+    private TextView ccotValue;
     private static String isbn = "";
+    DatabaseReference db;
 
     public Dashboard() {
         // Required empty public constructor
@@ -59,7 +67,7 @@ public class Dashboard extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState){
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button signOutButton = getView().findViewById(R.id.signOutButton);
         Button scanButton = getView().findViewById(R.id.scanButton);
@@ -70,9 +78,12 @@ public class Dashboard extends Fragment {
         barcodeTextbox = getView().findViewById(R.id.barcodeTextbox);
         sbtValue = getView().findViewById(R.id.sbtValue);
         sbaValue = getView().findViewById(R.id.sbaValue);
+        ccotValue = getView().findViewById(R.id.ccotValue);
+        db = FirebaseDatabase.getInstance().getReference("rvcont");
     }
 
     public Button.OnClickListener buttonListener = new Button.OnClickListener(){
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public void onClick(View v){
             switch(v.getId()){
                 case R.id.signOutButton:
@@ -91,26 +102,26 @@ public class Dashboard extends Fragment {
                             .initiateScan();
                     break;
                 case R.id.checkOutInitButton:
-                    if(barcodeTextbox.getText().length()!=0){
-                        if(isNumeric(barcodeTextbox.getText().toString())) {
-                            //TODO: Check for manual entering of barcode for char/string.
-                            Log.i("Barcode:", barcodeTextbox.getText().toString());
-                        }else if(isCheckedOut(barcodeTextbox.getText().toString())) {
-                            Toast.makeText(getContext(), "Book is already checked out!",
-                                    Toast.LENGTH_SHORT).show();
-                        }else{
-                                Toast.makeText(getContext(), "Invalid barcode!",
-                                        Toast.LENGTH_SHORT).show();
-                        }
-                    }else{
-                        Toast.makeText(getContext(), "Please Search or Scan a book",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                    //TODO: Handle return values of checkOut();
+                    testCheckOut(barcodeTextbox.getText().toString());
+                    makeToast("Check out Success!");
+                    //((TextView)getView().findViewById(R.id.ccobTextView1)).setText(tempBookTitle);
+                    /*if(preCheckOut()){
+                        checkOut(barcodeTextbox.getText().toString());
+                        makeToast("Check out Successful!");
+                        Log.i("preCheckOut", String.valueOf(preCheckOut()));
+                    }*/
                     break;
             }
         }
     };
 
+    private void testCheckOut(String barcode){
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        db.child("ccob").child(barcode).child("email").setValue(account.getEmail());
+    }
+
+    private String tempBookTitle;
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode,
@@ -121,22 +132,24 @@ public class Dashboard extends Fragment {
             Log.i("SCAN:", "Successful!");
             ((TextView)getView().findViewById(R.id.barcodeTextbox))
                     .setText(scanResult.getContents());
-            JSONObject jsonObject = null;
+            JSONObject jsonObject;
             try {
-                jsonObject = checkOut(barcodeTextbox.getText().toString());
-                String bookTitle = jsonObject.getJSONArray("items")
-                        .getJSONObject(0).getJSONObject("volumeInfo")
+                jsonObject = loadValues(barcodeTextbox.getText().toString());
+                String bookTitle = jsonObject.getJSONArray("items") .getJSONObject(0)
+                        .getJSONObject("volumeInfo")
                         .getString("title");
-                String author =  jsonObject.getJSONArray("items")
-                        .getJSONObject(0).getJSONObject("volumeInfo")
+                String author =  jsonObject.getJSONArray("items").getJSONObject(0)
+                        .getJSONObject("volumeInfo")
                         .getString("authors");
+                tempBookTitle = bookTitle;
+                getCcotName(barcodeTextbox.getText().toString());
                 sbtValue.setText(bookTitle);
                 sbaValue.setText(author);
+                ccotValue.setText(ccotName);
             } catch (ExecutionException | InterruptedException | JSONException e) {
                 e.printStackTrace();
             }
             //TODO: Log user scanned item. DB references not needed until check out.
-            //TODO: Set Selected Title/Author Text Fields.
 
         }
     }
@@ -188,19 +201,41 @@ public class Dashboard extends Fragment {
 
     }
 
-    private JSONObject checkOut(String barcode) throws ExecutionException, InterruptedException, JSONException {
+    private void makeToast(String message){
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private JSONObject loadValues(String barcode) throws ExecutionException, InterruptedException,
+            JSONException{
         isbn = barcode;
         AsyncBookRequest bookRequest = new AsyncBookRequest();
         bookRequest.execute();
         return bookRequest.get();
     }
 
-    private boolean isCheckedOut(String barcode){
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        Log.i("Test", db.child("cob").toString());
-        return false;
+    private boolean preCheckOut(){
+        existenceInit();
+        if(barcodeTextbox.getText().length() == 0){
+            makeToast("Please scan or enter a barcode!");
+            return false;
+        }else if(!isNumeric(barcodeTextbox.getText().toString())){
+            makeToast("Invalid Barcode!");
+            return false;
+        }else if(result){
+            makeToast("Book is already checked out!");
+            return false;
+        }
+        return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private Task<Void> checkOut(String barcode) {
+        //TODO: NPE Handling for V
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+        Log.i("Date:", LocalDate.now().toString());
+        Log.i("Id:", account.getId());
+        return db.child("cob").child(barcode).child(account.getId()).setValue(LocalDate.now().toString());
+    }
     private boolean isNumeric(String s){
         try{
             Long.parseLong(s);
@@ -208,6 +243,63 @@ public class Dashboard extends Fragment {
         }catch(NumberFormatException e){
             return false;
         }
+    }
+    private String ccotName;
+    private void getCcotName(String barcode){
+        if(db.child("ccob").child(barcode) != null){
+            Log.i("getCcotName",db.child("ccob").child(barcode).toString());
+            db.child("ccob").child(barcode).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //saveName(dataSnapshot.child("email").getValue().toString());
+                    //Log.i("Test", ccotName);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+    }
+
+    private void saveName(String name){
+        ccotName = name;
+    }
+
+    private interface OnGetDataListener{
+        void onSuccess(DataSnapshot dataSnapshot);
+        void onStart();
+        void onFailure();
+    }
+
+    private boolean result;
+
+    //TODO: Remove if readData is found e.a.b.a.
+    public void existenceInit(){
+        readData(db, new OnGetDataListener() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                result = dataSnapshot.child("cob").hasChild(isbn);
+
+                Log.i("existenceInit", String.valueOf(result));
+        }
+            @Override
+            public void onStart() {}
+            @Override
+            public void onFailure() {}
+        });
+    }
+    private void readData(DatabaseReference ref, final OnGetDataListener listener){
+        listener.onStart();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listener.onSuccess(dataSnapshot);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure();
+            }
+        });
     }
 
 }

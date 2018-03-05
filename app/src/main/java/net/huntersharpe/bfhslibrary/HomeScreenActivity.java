@@ -31,8 +31,8 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 case R.id.action_dashboard:
                                     fragment = new Dashboard();
                                     break;
-                                case R.id.action_notifications:
-                                    fragment = new Notifications();
+                                case R.id.action_search:
+                                    fragment = new Search();
                                     break;
                             }
                             final FragmentTransaction transaction = getSupportFragmentManager()

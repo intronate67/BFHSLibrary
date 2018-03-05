@@ -103,25 +103,12 @@ public class Dashboard extends Fragment {
                     break;
                 case R.id.checkOutInitButton:
                     //TODO: Handle return values of checkOut();
-                    testCheckOut(barcodeTextbox.getText().toString());
-                    makeToast("Check out Success!");
-                    //((TextView)getView().findViewById(R.id.ccobTextView1)).setText(tempBookTitle);
-                    /*if(preCheckOut()){
-                        checkOut(barcodeTextbox.getText().toString());
-                        makeToast("Check out Successful!");
-                        Log.i("preCheckOut", String.valueOf(preCheckOut()));
-                    }*/
+                    //Run preCheckOut() -> checkOut()
                     break;
             }
         }
     };
 
-    private void testCheckOut(String barcode){
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
-        db.child("ccob").child(barcode).child("email").setValue(account.getEmail());
-    }
-
-    private String tempBookTitle;
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode,
@@ -141,11 +128,8 @@ public class Dashboard extends Fragment {
                 String author =  jsonObject.getJSONArray("items").getJSONObject(0)
                         .getJSONObject("volumeInfo")
                         .getString("authors");
-                tempBookTitle = bookTitle;
-                getCcotName(barcodeTextbox.getText().toString());
                 sbtValue.setText(bookTitle);
                 sbaValue.setText(author);
-                ccotValue.setText(ccotName);
             } catch (ExecutionException | InterruptedException | JSONException e) {
                 e.printStackTrace();
             }
@@ -213,20 +197,6 @@ public class Dashboard extends Fragment {
         return bookRequest.get();
     }
 
-    private boolean preCheckOut(){
-        existenceInit();
-        if(barcodeTextbox.getText().length() == 0){
-            makeToast("Please scan or enter a barcode!");
-            return false;
-        }else if(!isNumeric(barcodeTextbox.getText().toString())){
-            makeToast("Invalid Barcode!");
-            return false;
-        }else if(result){
-            makeToast("Book is already checked out!");
-            return false;
-        }
-        return true;
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Task<Void> checkOut(String barcode) {
@@ -244,62 +214,4 @@ public class Dashboard extends Fragment {
             return false;
         }
     }
-    private String ccotName;
-    private void getCcotName(String barcode){
-        if(db.child("ccob").child(barcode) != null){
-            Log.i("getCcotName",db.child("ccob").child(barcode).toString());
-            db.child("ccob").child(barcode).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    //saveName(dataSnapshot.child("email").getValue().toString());
-                    //Log.i("Test", ccotName);
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
-    }
-
-    private void saveName(String name){
-        ccotName = name;
-    }
-
-    private interface OnGetDataListener{
-        void onSuccess(DataSnapshot dataSnapshot);
-        void onStart();
-        void onFailure();
-    }
-
-    private boolean result;
-
-    //TODO: Remove if readData is found e.a.b.a.
-    public void existenceInit(){
-        readData(db, new OnGetDataListener() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                result = dataSnapshot.child("cob").hasChild(isbn);
-
-                Log.i("existenceInit", String.valueOf(result));
-        }
-            @Override
-            public void onStart() {}
-            @Override
-            public void onFailure() {}
-        });
-    }
-    private void readData(DatabaseReference ref, final OnGetDataListener listener){
-        listener.onStart();
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                listener.onSuccess(dataSnapshot);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onFailure();
-            }
-        });
-    }
-
 }

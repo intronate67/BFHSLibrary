@@ -8,10 +8,8 @@
     <string name="text_dashboard">Dashboard</string>
     <string name="text_search">Search</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profPicDesc">Profile Picture</string>
-    <string name="welcomeBackLabel">Welcome Back</string>
+    <string name="welcomeBackLabel">Welcome</string>
     <string name="user">User</string>
     <string name="signOutButtonLabel">Sign Out</string>
     <string name="ccobLabel">Current Checked Out Books</string>

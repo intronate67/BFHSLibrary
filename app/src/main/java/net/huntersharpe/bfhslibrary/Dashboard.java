@@ -1,7 +1,6 @@
 package net.huntersharpe.bfhslibrary;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,41 +16,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.LocalDate;
 import java.util.concurrent.ExecutionException;
 
 public class Dashboard extends Fragment {
     //TODO: Remove debug logs.
     private EditText barcodeTextbox;
-    private TextView sbtValue;
-    private TextView sbaValue;
-    private TextView ccotValue;
-    private static String isbn = "";
     DatabaseReference db;
+    LibraryManager libManager;
 
     public Dashboard() {
         // Required empty public constructor
+        libManager = LibraryManager.getInstance();
     }
 
     @Override
@@ -76,10 +62,6 @@ public class Dashboard extends Fragment {
         scanButton.setOnClickListener(buttonListener);
         checkOutButton.setOnClickListener(buttonListener);
         barcodeTextbox = getView().findViewById(R.id.barcodeTextbox);
-        sbtValue = getView().findViewById(R.id.sbtValue);
-        sbaValue = getView().findViewById(R.id.sbaValue);
-        ccotValue = getView().findViewById(R.id.ccotValue);
-        db = FirebaseDatabase.getInstance().getReference("rvcont");
     }
 
     public Button.OnClickListener buttonListener = new Button.OnClickListener(){
@@ -102,8 +84,10 @@ public class Dashboard extends Fragment {
                             .initiateScan();
                     break;
                 case R.id.checkOutInitButton:
-                    //TODO: Handle return values of checkOut();
-                    //Run preCheckOut() -> checkOut()
+                    if(libManager.checkOutConditions()){
+                        libManager.setIsbn(barcodeTextbox.getText().toString());
+                        //TODO: Check out!
+                    }
                     break;
             }
         }
@@ -119,99 +103,18 @@ public class Dashboard extends Fragment {
             Log.i("SCAN:", "Successful!");
             ((TextView)getView().findViewById(R.id.barcodeTextbox))
                     .setText(scanResult.getContents());
-            JSONObject jsonObject;
+            JSONObject results;
             try {
-                jsonObject = loadValues(barcodeTextbox.getText().toString());
-                String bookTitle = jsonObject.getJSONArray("items") .getJSONObject(0)
-                        .getJSONObject("volumeInfo")
-                        .getString("title");
-                String author =  jsonObject.getJSONArray("items").getJSONObject(0)
-                        .getJSONObject("volumeInfo")
-                        .getString("authors");
-                sbtValue.setText(bookTitle);
-                sbaValue.setText(author);
-            } catch (ExecutionException | InterruptedException | JSONException e) {
+                 results = (JSONObject) libManager.loadScanResults().get();
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-            //TODO: Log user scanned item. DB references not needed until check out.
-
+            //TODO: Load JSON Results into sbt and sba labels.
         }
-    }
-
-    private static class AsyncBookRequest extends AsyncTask<String, Object, JSONObject>{
-
-        @Override
-        protected JSONObject doInBackground(String... strings){
-            if(isCancelled()){
-                return null;
-            }else{
-                //TODO: Add toast messages.
-                String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
-                Log.i("urlString: ", apiUrlString);
-                try{
-                    HttpURLConnection connection = null;
-                    // Build Connection.
-                    URL url = new URL(apiUrlString);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setReadTimeout(5000); // 5 seconds
-                    connection.setConnectTimeout(5000); // 5 seconds
-                    int responseCode = connection.getResponseCode();
-                    if(responseCode != 200){
-                        Log.w(getClass().getName(), "Books request failed. Response Code: " +
-                                responseCode);
-                        connection.disconnect();
-                        return null;
-                    }
-                    StringBuilder builder = new StringBuilder();
-                    BufferedReader responseReader = new BufferedReader(new InputStreamReader(
-                            connection.getInputStream()));
-                    String line = responseReader.readLine();
-                    while (line != null){
-                        builder.append(line);
-                        line = responseReader.readLine();
-                    }
-                    String responseString = builder.toString();
-                    Log.d(getClass().getName(), "Response String: " + responseString);
-                    JSONObject responseJson = new JSONObject(responseString);
-                    connection.disconnect();
-                    return responseJson;
-                } catch (IOException | JSONException e) {
-                    Log.w(getClass().getName(), "Connection timed out. Returning null");
-                    return null;
-                }
-            }
-        }
-
     }
 
     private void makeToast(String message){
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private JSONObject loadValues(String barcode) throws ExecutionException, InterruptedException,
-            JSONException{
-        isbn = barcode;
-        AsyncBookRequest bookRequest = new AsyncBookRequest();
-        bookRequest.execute();
-        return bookRequest.get();
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private Task<Void> checkOut(String barcode) {
-        //TODO: NPE Handling for V
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
-        Log.i("Date:", LocalDate.now().toString());
-        Log.i("Id:", account.getId());
-        return db.child("cob").child(barcode).child(account.getId()).setValue(LocalDate.now().toString());
-    }
-    private boolean isNumeric(String s){
-        try{
-            Long.parseLong(s);
-            return true;
-        }catch(NumberFormatException e){
-            return false;
-        }
-    }
 }

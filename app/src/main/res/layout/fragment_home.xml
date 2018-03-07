@@ -40,7 +40,7 @@
         android:layout_height="60dp"
         android:layout_alignBaseline="@+id/welcomeBackTextView"
         android:layout_alignBottom="@+id/welcomeBackTextView"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_toEndOf="@+id/welcomeBackTextView"
         android:text="@string/user"

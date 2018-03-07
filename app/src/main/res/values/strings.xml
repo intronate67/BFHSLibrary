@@ -9,7 +9,7 @@
     <string name="text_search">Search</string>
 
     <string name="profPicDesc">Profile Picture</string>
-    <string name="welcomeBackLabel">Welcome</string>
+    <string name="welcomeBackLabel">Welcome,</string>
     <string name="user">User</string>
     <string name="signOutButtonLabel">Sign Out</string>
     <string name="ccobLabel">Current Checked Out Books</string>
@@ -24,4 +24,8 @@
     <string name="nullText">Null</string>
     <string name="topNotifEmpty">Horay! No Books Due</string>
     <string name="emptyString" />
+    <string name="no_results_found">No results found.</string>
+    <string name="popupReserveText">Reserve</string>
+    <string name="popupCancelText">Cancel</string>
+    <string name="popupPicDesc">Book Cover</string>
 </resources>

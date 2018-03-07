@@ -1,10 +1,10 @@
 package net.huntersharpe.bfhslibrary;
 
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +27,6 @@ public class Home extends Fragment {
 
     private static String profURL = "";
     private static Bitmap bm = null;
-    private TextView ccob1;
     private DatabaseReference db;
 
     public Home() {
@@ -43,6 +42,7 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -61,8 +61,8 @@ public class Home extends Fragment {
             imageView.setImageBitmap(bm);
         }
         db = FirebaseDatabase.getInstance().getReference();
-        ccob1 = getView().findViewById(R.id.ccobTextView1);
-        ccob1.setText(getCcob(account.getId()));
+        TextView ccob = getView().findViewById(R.id.ccobTextView1);
+        ccob.setText(getCcob(account.getId()));
     }
 
     private String getCcob(String uid){

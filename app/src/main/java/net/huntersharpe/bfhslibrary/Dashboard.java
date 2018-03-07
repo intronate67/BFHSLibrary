@@ -1,11 +1,11 @@
 package net.huntersharpe.bfhslibrary;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +20,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
@@ -32,8 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class Dashboard extends Fragment {
     //TODO: Remove debug logs.
     private EditText barcodeTextbox;
-    DatabaseReference db;
-    LibraryManager libManager;
+    private LibraryManager libManager;
 
     public Dashboard() {
         // Required empty public constructor
@@ -80,7 +78,7 @@ public class Dashboard extends Fragment {
                     });
                     break;
                 case R.id.scanButton:
-                    IntentIntegrator.forSupportFragment(Dashboard.this).setPrompt("Scan Barcode")
+                    IntentIntegrator.forFragment(Dashboard.this).setPrompt("Scan Barcode")
                             .initiateScan();
                     break;
                 case R.id.checkOutInitButton:
@@ -101,15 +99,35 @@ public class Dashboard extends Fragment {
         Log.i("ScanResult:", scanResult.getContents());
         if(scanResult.getContents() != null){
             Log.i("SCAN:", "Successful!");
-            ((TextView)getView().findViewById(R.id.barcodeTextbox))
+            ((TextView)getNonNullView().findViewById(R.id.barcodeTextbox))
                     .setText(scanResult.getContents());
-            JSONObject results;
+            JSONObject results = null;
+            String bookTitle = "";
+            String bookAuthor = "";
             try {
                  results = (JSONObject) libManager.loadScanResults().get();
-            } catch (InterruptedException | ExecutionException e) {
+                 bookTitle = results.getJSONArray("items")
+                         .getJSONObject(0).getJSONObject("volumeInfo")
+                         .getString("title");
+                 bookAuthor = results.getJSONArray("items").getJSONObject(0)
+                         .getJSONObject("volumeInfo").getString("authors");
+            } catch (InterruptedException | ExecutionException | JSONException e) {
                 e.printStackTrace();
             }
-            //TODO: Load JSON Results into sbt and sba labels.
+            if(getView() != null && results != null){
+                ((TextView)getNonNullView().findViewById(R.id.sbtValue)).setText(bookTitle);
+                ((TextView)getNonNullView().findViewById(R.id.sbaValue)).setText(bookAuthor);
+            }else{
+                makeToast("Book not Found!");
+            }
+        }
+    }
+
+    private View getNonNullView(){
+        if(getView() != null){
+            return getView();
+        }else{
+            return null;
         }
     }
 

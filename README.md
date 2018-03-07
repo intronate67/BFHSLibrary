@@ -1,4 +1,4 @@
-# BFHSLibrary
+# BFHSLibrary ![alt text](https://travis-ci.org/intronate67/BFHSLibrary.svg?branch=master "Travis-ci Build Status")
 Mobile Application Development
 
 Big Foot High School

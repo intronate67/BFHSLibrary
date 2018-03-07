@@ -1,5 +1,5 @@
 language: java
 sudo: false
 before_install:
-  - chmod +x build.sh
+  - chmod +x ./gradlew
 script: gradle clean

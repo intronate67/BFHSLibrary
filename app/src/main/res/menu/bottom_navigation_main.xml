@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_dashboard"
         android:enabled="true"
@@ -16,9 +14,9 @@
         android:title="@string/text_home"
         android:visible="true" />
     <item
-        android:id="@+id/action_notifications"
+        android:id="@+id/action_search"
         android:enabled="true"
-        android:icon="@drawable/ic_action_notifications"
-        android:title="@string/text_notifications"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/text_search"
         android:visible="true" />
 </menu>

@@ -16,7 +16,7 @@
         android:layout_marginTop="4dp"
         android:text="@string/signOutButtonLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkOutInitButton" />
 
@@ -28,12 +28,12 @@
         android:layout_alignEnd="@+id/signOutButton"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="63dp"
         android:text="@string/checkOutLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sbaValue" />
+        app:layout_constraintTop_toBottomOf="@+id/sbaLabel" />
 
     <EditText
         android:id="@+id/barcodeTextbox"
@@ -41,14 +41,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/checkOutInitButton"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/barcodeEmptyLabel"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/scanButton"
@@ -57,10 +57,10 @@
         android:layout_alignEnd="@+id/barcodeTextbox"
         android:layout_below="@+id/checkOutInitButton"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:text="@string/scanButtonLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/bookTitlePlaceholder"
@@ -78,24 +78,14 @@
         android:layout_below="@+id/checkOutInitButton"
         android:textSize="18sp" />
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bookTitlePlaceholder"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/sbtLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:text="@string/sbtText"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barcodeTextbox" />
 
@@ -103,9 +93,10 @@
         android:id="@+id/sbaLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
         android:text="@string/sbaText"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sbtLabel" />
 
@@ -113,46 +104,22 @@
         android:id="@+id/sbtValue"
         android:layout_width="107dp"
         android:layout_height="42dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="27dp"
         android:text="@string/nullText"
-        app:layout_constraintBottom_toTopOf="@+id/sbaValue"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/sbtLabel"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextbox" />
+        app:layout_constraintTop_toBottomOf="@+id/scanButton" />
 
     <TextView
         android:id="@+id/sbaValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/nullText"
-        app:layout_constraintBottom_toTopOf="@+id/ccotValue"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/sbaLabel"
         app:layout_constraintTop_toBottomOf="@+id/sbtValue" />
-
-    <TextView
-        android:id="@+id/ccotLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/ccotText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sbaLabel" />
-
-    <TextView
-        android:id="@+id/ccotValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="47dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="38dp"
-        android:text="@string/nullText"
-        app:layout_constraintBottom_toTopOf="@+id/checkOutInitButton"
-        app:layout_constraintStart_toEndOf="@+id/ccotLabel"
-        app:layout_constraintTop_toBottomOf="@+id/sbaValue" />
 
 </android.support.constraint.ConstraintLayout>

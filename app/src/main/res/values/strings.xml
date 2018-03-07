@@ -2,16 +2,14 @@
     <string name="app_name">BFHSLibrary</string>
     <string name="mainScreenLabel">Big Foot High School Library</string>
     <string name="loginButtonLabel">Sign In With Google</string>
-    <string name="mainScreenInfo">\n\n\nLibrary Managment App\n Written in Java\n For FBLA\n Author: Hunter Sharpe</string>
+    <string name="mainScreenInfo">\n\n\nLibrary Management App\n Written in Java\n For FBLA\n Author: Hunter Sharpe</string>
     <string name="server_client_id">636392776785-lv0j7sdfsovegm0kgomjcpkdrh8b8e5f.apps.googleusercontent.com</string>
     <string name="text_home">Home</string>
     <string name="text_dashboard">Dashboard</string>
-    <string name="text_notifications">Notifications</string>
+    <string name="text_search">Search</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profPicDesc">Profile Picture</string>
-    <string name="welcomeBackLabel">Welcome Back</string>
+    <string name="welcomeBackLabel">Welcome,</string>
     <string name="user">User</string>
     <string name="signOutButtonLabel">Sign Out</string>
     <string name="ccobLabel">Current Checked Out Books</string>
@@ -26,4 +24,8 @@
     <string name="nullText">Null</string>
     <string name="topNotifEmpty">Horay! No Books Due</string>
     <string name="emptyString" />
+    <string name="no_results_found">No results found.</string>
+    <string name="popupReserveText">Reserve</string>
+    <string name="popupCancelText">Cancel</string>
+    <string name="popupPicDesc">Book Cover</string>
 </resources>

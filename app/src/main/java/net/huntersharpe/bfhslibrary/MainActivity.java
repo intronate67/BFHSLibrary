@@ -22,8 +22,6 @@ import java.io.File;
 import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
-    //TODO: Switch all auth and oth req. to GCP
-    //TODO: Fix email and password textboxes.
     private static final String TAG = "MainActivity";
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient signInClient;
@@ -73,17 +71,10 @@ public class MainActivity extends AppCompatActivity {
             handleSignInResult(task);
         }
     }
-    //TODO: set display name
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
-        try{
-            Log.i(TAG, "Handling Sign In");
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
-            startActivity(intent);
-            Toast.makeText(getBaseContext(), "Success!", Toast.LENGTH_SHORT).show();
-        }catch (ApiException e){
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            Toast.makeText(getBaseContext(), "Login Failed!", Toast.LENGTH_SHORT).show();
-        }
+        Log.i(TAG, "Handling Sign In");
+        Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
+        startActivity(intent);
+        Toast.makeText(getBaseContext(), "Success!", Toast.LENGTH_SHORT).show();
     }
 }

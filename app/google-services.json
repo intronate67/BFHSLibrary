@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "636392776785-g52um6ksoamm2ndc2kd2bno0i8076t5o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.huntersharpe.bfhslibrary",
+            "certificate_hash": "ad592fc57aee501e74e4d1132c0b838a12f0ccbf"
+          }
+        },
+        {
           "client_id": "636392776785-bt8amv6b53nunpt6aaoaonjc6jof1pc1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

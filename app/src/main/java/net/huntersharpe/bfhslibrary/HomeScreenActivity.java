@@ -1,8 +1,8 @@
 package net.huntersharpe.bfhslibrary;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -14,9 +14,13 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
         final BottomNavigationView bnView = findViewById(R.id.bottom_navigation);
         if(savedInstanceState == null){
             bnView.setSelectedItemId(R.id.action_home);
+            final FragmentTransaction transaction = getFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragment_container, new Home()).commit();
         }
         if(bnView != null){
             bnView.setOnNavigationItemSelectedListener(
@@ -31,11 +35,11 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 case R.id.action_dashboard:
                                     fragment = new Dashboard();
                                     break;
-                                case R.id.action_notifications:
-                                    fragment = new Notifications();
+                                case R.id.action_search:
+                                    fragment = new Search();
                                     break;
                             }
-                            final FragmentTransaction transaction = getSupportFragmentManager()
+                            final FragmentTransaction transaction = getFragmentManager()
                                     .beginTransaction();
                             transaction.replace(R.id.fragment_container, fragment).commit();
                             return true;

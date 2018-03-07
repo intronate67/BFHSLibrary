@@ -1,5 +1,15 @@
-language: java
+language: android
 sudo: false
+android:
+  components:
+    - tools
+    - build-tools-25.0.1
+    - android-25
+    - extra-android-support
+    - extra-android-m2repository
+jdk:
+  - oraclejdk8
 before_install:
   - chmod +x ./gradlew
 script: gradle clean
+

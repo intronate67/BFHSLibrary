@@ -34,3 +34,8 @@ FBLA 2018
      - Make sure Debug is the build type and simple as Flavor
  - Generate APK File should under the same directory you cloned the repository
      - Ex: C:/Users/user/StudioProjects/BFHSLibrary/android/build/outputs/apk/app_debug.apk
+## Software/Technology Used
+- Android Studio
+- Gradle
+- Google Books API
+- Google Firebase API

@@ -1,5 +1,4 @@
-language: java
-sudo: false
+language: android
 before_install:
   - chmod +x ./gradlew
 script: gradle clean

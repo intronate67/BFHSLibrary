@@ -1,5 +1,7 @@
-language: java
-sudo: false
-before_install:
-  - chmod +x ./gradlew
+language: android
+jdk: oraclejdk8
+android:
+  components:
+    - tools
+    - platform-tools
 script: gradle clean

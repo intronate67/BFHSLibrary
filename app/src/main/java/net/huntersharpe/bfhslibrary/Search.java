@@ -21,10 +21,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -61,14 +63,20 @@ public class Search extends ListFragment implements SearchView.OnQueryTextListen
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.search_popup, null);
-        ((TextView)popupView.findViewById(R.id.popupTitleTextView)).setText(item);
-        ((TextView)popupView.findViewById(R.id.popupAuthorTextView)).setText(R.string.nullText);
+        TextView authView = popupView.findViewById(R.id.popupAuthorTextView);
+        TextView titleView = popupView.findViewById(R.id.popupTitleTextView);
+        titleView.setText(item);
+        TextView descView = popupView.findViewById(R.id.popupDescTextBox);
         try {
             //TODO: Find book specific cover
-            coverUrl = ((JSONObject)libManager.getAsyncInstance()
-                    .execute(LibraryManager.CallType.SEARCH_QUERY).get())
-                    .getJSONArray("items").getJSONObject(position).getJSONObject("volumeInfo")
-                    .getJSONObject("imageLinks").getString("thumbnail");
+            //Get parent node.
+            JSONObject book = ((JSONObject)libManager.getAsyncInstance()
+                                    .execute(LibraryManager.CallType.SEARCH_QUERY).get())
+                                    .getJSONArray("items").getJSONObject(position)
+                                    .getJSONObject("volumeInfo");
+            coverUrl = book.getJSONObject("imageLinks").getString("thumbnail");
+            descView.setText(book.getString("description"));
+            authView.setText(book.getString("authors"));
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
         }
@@ -88,7 +96,8 @@ public class Search extends ListFragment implements SearchView.OnQueryTextListen
         popupView.findViewById(R.id.popupReserveButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //TODO: reserveBook()
+                Toast.makeText(getContext(), "Reserved!", Toast.LENGTH_LONG).show();
             }
         });
     }

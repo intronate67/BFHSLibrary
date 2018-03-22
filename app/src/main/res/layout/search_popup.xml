@@ -5,17 +5,25 @@
     android:id="@+id/search_popup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
     android:gravity="center_horizontal"
-    android:padding="2dp">
+    android:padding="2dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="291dp"
-        android:layout_height="446dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="4dp"
-        android:background="@color/colorWhite"
+        android:layout_width="347dp"
+        android:layout_height="485dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border_white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <View
@@ -31,7 +39,7 @@
             android:id="@+id/popupReserveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="17dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/popupReserveText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,8 +59,8 @@
             android:id="@+id/popupBookCover"
             android:layout_width="74dp"
             android:layout_height="78dp"
-            android:layout_marginStart="108dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="56dp"
             android:contentDescription="@string/popupPicDesc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +70,8 @@
             android:id="@+id/popupTitleTextView"
             android:layout_width="161dp"
             android:layout_height="45dp"
-            android:layout_marginStart="64dp"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="8dp"
             android:text="@string/nullText"
             android:textAlignment="center"
             android:textSize="18sp"
@@ -73,7 +82,7 @@
             android:id="@+id/popupAuthorTextView"
             android:layout_width="162dp"
             android:layout_height="40dp"
-            android:layout_marginStart="64dp"
+            android:layout_marginStart="92dp"
             android:text="@string/nullText"
             android:textAlignment="center"
             android:textSize="18sp"
@@ -82,12 +91,15 @@
 
         <TextView
             android:id="@+id/popupDescTextBox"
-            android:layout_width="290dp"
-            android:layout_height="217dp"
-            android:layout_marginTop="7dp"
-            android:text="TextView"
+            android:layout_width="328dp"
+            android:layout_height="257dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/nullText"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
     </android.support.constraint.ConstraintLayout>
-
 </android.support.constraint.ConstraintLayout>

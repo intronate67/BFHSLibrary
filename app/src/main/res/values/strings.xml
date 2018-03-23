@@ -18,8 +18,8 @@
     <string name="scanButtonLabel">Scan</string>
     <string name="checkOutLabel">Check Out</string>
     <string name="search_hint">Book Name</string>
-    <string name="sbtText">Selected Book Title:</string>
-    <string name="sbaText">Selected Book Author:</string>
+    <string name="sbtText">Book Title\ \ \ \ \ :</string>
+    <string name="sbaText">Book Author    :</string>
     <string name="ccotText">Currently Checked Out To:</string>
     <string name="nullText">Null</string>
     <string name="topNotifEmpty">Horay! No Books Due</string>
@@ -28,4 +28,6 @@
     <string name="popupReserveText">Reserve</string>
     <string name="popupCancelText">Cancel</string>
     <string name="popupPicDesc">Book Cover</string>
+    <string name="actionBarLogOut">Log Out</string>
+    <string name="bookCoverDesc">Book Cover</string>
 </resources>

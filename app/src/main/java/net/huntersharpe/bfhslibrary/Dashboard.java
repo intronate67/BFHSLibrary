@@ -1,5 +1,6 @@
 package net.huntersharpe.bfhslibrary;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
@@ -53,37 +54,24 @@ public class Dashboard extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button signOutButton = getView().findViewById(R.id.signOutButton);
         Button scanButton = getView().findViewById(R.id.scanButton);
         Button checkOutButton = getView().findViewById(R.id.checkOutInitButton);
-        signOutButton.setOnClickListener(buttonListener);
         scanButton.setOnClickListener(buttonListener);
         checkOutButton.setOnClickListener(buttonListener);
         barcodeTextbox = getView().findViewById(R.id.barcodeTextbox);
     }
 
     public Button.OnClickListener buttonListener = new Button.OnClickListener(){
+        @SuppressLint("RestrictedApi")
         @RequiresApi(api = Build.VERSION_CODES.O)
         public void onClick(View v){
             switch(v.getId()){
-                case R.id.signOutButton:
-                    GoogleSignInClient client = GoogleSignIn.getClient(getContext(),
-                            GoogleSignInOptions.DEFAULT_SIGN_IN);
-                    client.signOut().addOnCompleteListener(getActivity(),
-                            new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            startActivity(new Intent(getActivity(), MainActivity.class));
-                        }
-                    });
-                    break;
                 case R.id.scanButton:
                     IntentIntegrator.forFragment(Dashboard.this).setPrompt("Scan Barcode")
                             .initiateScan();
                     break;
                 case R.id.checkOutInitButton:
                     if(libManager.checkOutConditions()){
-                        libManager.setIsbn(barcodeTextbox.getText().toString());
                         //TODO: Check out!
                     }
                     break;
@@ -95,13 +83,20 @@ public class Dashboard extends Fragment {
         super.onActivityResult(requestCode, resultCode, intent);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode,
                 intent);
-        Log.i("onActivityResult", "called!");
-        Log.i("ScanResult:", scanResult.getContents());
         if(scanResult.getContents() != null){
             Log.i("SCAN:", "Successful!");
             ((TextView)getNonNullView().findViewById(R.id.barcodeTextbox))
                     .setText(scanResult.getContents());
-            JSONObject results = null;
+            //TODO: Remove comments
+            /*String[] results = libManager.runTask(LibraryManager.RequestType.BOOK_ALL);
+            if(results[0].equals("null")){
+                //Book Not Found
+                Toast.makeText(getContext(), "Test Failure!", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getContext(), "Test Success!", Toast.LENGTH_SHORT).show();
+                //Set book title, author, cover picture
+            }*/
+            /*JSONObject results = null;
             String bookTitle = "";
             String bookAuthor = "";
             try {
@@ -119,7 +114,26 @@ public class Dashboard extends Fragment {
                 ((TextView)getNonNullView().findViewById(R.id.sbaValue)).setText(bookAuthor);
             }else{
                 makeToast("Book not Found!");
+            }*/
+        }else{
+            Log.i("TEST", "Else fired!");
+            //TODO: Remove - Temp for debug
+            JSONObject jsonObject = libManager.getJsonResponseFor("0545162076");
+            String title = "";
+            try{
+                title = jsonObject.getJSONArray("items").getJSONObject(0)
+                        .getJSONObject("volumeInfo").getString("title");
+            }catch(JSONException e){
+                e.printStackTrace();
             }
+            Log.i("Results[0]", title);
+            /*if(results[0].equals("null") || results[0].equals("error")){
+                //Book Not Found
+                Toast.makeText(getContext(), "Test Failure!", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getContext(), "Test Success!", Toast.LENGTH_SHORT).show();
+                //Set book title, author, cover picture
+            }*/
         }
     }
 

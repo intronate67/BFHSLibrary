@@ -6,45 +6,28 @@
     tools:context="net.huntersharpe.bfhslibrary.Dashboard">
 
     <Button
-        android:id="@+id/signOutButton"
-        android:layout_width="267dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/signOutButtonLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkOutInitButton" />
-
-    <Button
         android:id="@+id/checkOutInitButton"
-        android:layout_width="267dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/signOutButton"
-        android:layout_alignEnd="@+id/signOutButton"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="63dp"
+        android:layout_marginTop="50dp"
         android:text="@string/checkOutLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sbaLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/dashBookCoverView" />
 
     <EditText
         android:id="@+id/barcodeTextbox"
-        android:layout_width="181dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/checkOutInitButton"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text="@string/barcodeEmptyLabel"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,14 +35,16 @@
 
     <Button
         android:id="@+id/scanButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/barcodeTextbox"
         android:layout_below="@+id/checkOutInitButton"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="220dp"
         android:layout_marginTop="32dp"
         android:text="@string/scanButtonLabel"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/barcodeTextbox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -82,8 +67,8 @@
         android:id="@+id/sbtLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:text="@string/sbtText"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,8 +78,8 @@
         android:id="@+id/sbaLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/sbaText"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,8 +89,8 @@
         android:id="@+id/sbtValue"
         android:layout_width="107dp"
         android:layout_height="42dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:text="@string/nullText"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/sbtLabel"
@@ -115,11 +100,23 @@
         android:id="@+id/sbaValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
         android:text="@string/nullText"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/sbaLabel"
         app:layout_constraintTop_toBottomOf="@+id/sbtValue" />
+
+    <ImageView
+        android:id="@+id/dashBookCoverView"
+        android:layout_width="102dp"
+        android:layout_height="118dp"
+        android:layout_marginEnd="119dp"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="60dp"
+        android:contentDescription="@string/bookCoverDesc"
+        android:src="?android:attr/alertDialogIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sbaLabel" />
 
 </android.support.constraint.ConstraintLayout>

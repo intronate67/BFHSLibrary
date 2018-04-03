@@ -67,22 +67,7 @@ public class Search extends ListFragment implements SearchView.OnQueryTextListen
         TextView titleView = popupView.findViewById(R.id.popupTitleTextView);
         titleView.setText(item);
         TextView descView = popupView.findViewById(R.id.popupDescTextBox);
-        try {
-            //TODO: Find book specific cover
-            //Get parent node.
-            JSONObject book = ((JSONObject)libManager.getAsyncInstance()
-                                    .execute(LibraryManager.CallType.SEARCH_QUERY).get())
-                                    .getJSONArray("items").getJSONObject(position)
-                                    .getJSONObject("volumeInfo");
-            coverUrl = book.getJSONObject("imageLinks").getString("thumbnail");
-            descView.setText(book.getString("description"));
-            authView.setText(book.getString("authors"));
-        } catch (InterruptedException | ExecutionException | JSONException e) {
-            e.printStackTrace();
-        }
-        AsyncBitmapRequest task = new AsyncBitmapRequest();
-        task.execute();
-        ((ImageView)popupView.findViewById(R.id.popupBookCover)).setImageBitmap(bm);
+        //TODO: Set Book Cover here
         final PopupWindow window = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setElevation(5.0f);
@@ -161,42 +146,10 @@ public class Search extends ListFragment implements SearchView.OnQueryTextListen
         mAllValues.clear();
         String searchTerms = query.replaceAll(" ", "+");
         Log.i("loadSearchIntoList:", searchTerms);
-        LibraryManager.content = searchTerms + "&maxResults=40";
-        Log.i("loadSearchIntoList:", "Set Search Terms");
-        JSONObject jsonResponse = (JSONObject)libManager.getAsyncInstance().execute(LibraryManager.CallType.SCAN_INFO).get();
-        Log.i("jsonInfo", jsonResponse.getJSONArray("items").getJSONObject(0).getJSONObject("volumeInfo").getString("title"));
-        for(int i = 0; i < jsonResponse.getJSONArray("items").length(); i++){
-            JSONObject tempObject = jsonResponse.getJSONArray("items").getJSONObject(i);
-            String title = tempObject.getJSONObject("volumeInfo").getString("title");
-            mAllValues.add(title);
-            //TODO: Add subtexts
-        }
+        //TODO: Load JSON Response into listView from libManager
+
         mAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, mAllValues);
         setListAdapter(mAdapter);
-    }
-
-    private static class AsyncBitmapRequest extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            bm = getImageBitmap(coverUrl);
-            return null;
-        }
-    }
-    private static Bitmap getImageBitmap(String url){
-        Bitmap bm = null;
-        try {
-            URL aURL = new URL(url);
-            URLConnection conn = aURL.openConnection();
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-            bm = BitmapFactory.decodeStream(bis);
-            bis.close();
-            is.close();
-        } catch (IOException e) {
-            Log.e("Test", "Error getting bitmap", e);
-        }
-        return bm;
     }
 
 }

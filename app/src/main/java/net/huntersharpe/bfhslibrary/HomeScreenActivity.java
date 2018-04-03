@@ -1,12 +1,22 @@
 package net.huntersharpe.bfhslibrary;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
@@ -47,5 +57,26 @@ public class HomeScreenActivity extends AppCompatActivity {
                     }
             );
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+        return true;
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        @SuppressLint("RestrictedApi") GoogleSignInClient client = GoogleSignIn.getClient(getApplicationContext(),
+                GoogleSignInOptions.DEFAULT_SIGN_IN);
+        client.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Toast.makeText(getBaseContext(), "Logged Out", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        return true;
     }
 }

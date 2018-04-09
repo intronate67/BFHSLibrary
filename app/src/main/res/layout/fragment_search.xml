@@ -29,15 +29,18 @@
         android:layout_width="match_parent"
         android:layout_height="406dp"
         android:gravity="center"
-        android:text="@string/no_results_found"
+        android:text="@string/search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchDivider" />
 
     <ListView
         android:id="@android:id/list"
+        style="@style/Widget.AppCompat.ListView.Menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="53dp"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -87,22 +87,26 @@
 
     <TextView
         android:id="@+id/sbtValue"
-        android:layout_width="107dp"
+        android:layout_width="169dp"
         android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="@string/nullText"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbtLabel"
         app:layout_constraintTop_toBottomOf="@+id/scanButton" />
 
     <TextView
         android:id="@+id/sbaValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="168dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="20dp"
         android:text="@string/nullText"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sbaLabel"
         app:layout_constraintTop_toBottomOf="@+id/sbtValue" />
 

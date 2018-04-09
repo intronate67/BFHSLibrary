@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/actionBarLogOutItem"  app:showAsAction="never" android:title="@string/actionBarLogOut">
-    </item>
+        android:id="@+id/notificationsItem"
+        app:showAsAction="never"
+        android:title="@string/notification_item_string" />
+    <item
+        android:id="@+id/actionBarLogOutItem"
+        app:showAsAction="never"
+        android:title="@string/actionBarLogOut"/>
 </menu>

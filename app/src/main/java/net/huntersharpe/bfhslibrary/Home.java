@@ -4,22 +4,24 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Home extends Fragment {
 
-    private static String profURL = "";
-    private static Bitmap bm = null;
-    private DatabaseReference db;
+    private ImageView profImgView;
 
     public Home() {
         // Required empty public constructor
@@ -44,12 +46,32 @@ public class Home extends Fragment {
         @SuppressLint("RestrictedApi") GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
         if (account != null) {
             ((TextView)getView().findViewById(R.id.namePlaceholder)).setText(account.getDisplayName());
-            ImageView imageView = getView().findViewById(R.id.imageView);
-           //TODO: Set image from JSON Response
+            profImgView = getView().findViewById(R.id.imageView);
+            setProfPic(account.getPhotoUrl().toString());
         }
-        db = FirebaseDatabase.getInstance().getReference();
-        //TextView ccob = getView().findViewById(R.id.ccobTextView1);
-        //ccob.setText(getCcob(account.getId()));
+    }
+
+    private void setProfPic(String profUrl){
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        ImageRequest imageRequest = new ImageRequest(
+                profUrl,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        profImgView.setImageBitmap(response);
+                    }
+                },
+                0,
+                0,
+                ImageView.ScaleType.CENTER_CROP,
+                Bitmap.Config.RGB_565,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+        queue.add(imageRequest);
     }
 
 }

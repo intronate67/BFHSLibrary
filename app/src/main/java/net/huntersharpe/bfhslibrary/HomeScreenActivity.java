@@ -2,6 +2,7 @@ package net.huntersharpe.bfhslibrary;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.app.FragmentTransaction;
@@ -24,7 +25,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
         final BottomNavigationView bnView = findViewById(R.id.bottom_navigation);
         if(savedInstanceState == null){
             bnView.setSelectedItemId(R.id.action_home);
@@ -60,6 +60,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
+
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
         return true;
     }
@@ -67,16 +68,28 @@ public class HomeScreenActivity extends AppCompatActivity {
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        @SuppressLint("RestrictedApi") GoogleSignInClient client = GoogleSignIn.getClient(getApplicationContext(),
-                GoogleSignInOptions.DEFAULT_SIGN_IN);
-        client.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        Toast.makeText(getBaseContext(), "Logged Out", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        switch (item.getItemId()){
+            case R.id.actionBarLogOutItem:
+                @SuppressLint("RestrictedApi") GoogleSignInClient client = GoogleSignIn.getClient(getApplicationContext(),
+                        GoogleSignInOptions.DEFAULT_SIGN_IN);
+                client.signOut().addOnCompleteListener(this,
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                Toast.makeText(getBaseContext(), "Logged Out", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                return(true);
+            case R.id.notificationsItem:
+                FragmentManager manager = getFragmentManager();
+                Notifications notifications = new Notifications();
+                FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, notifications);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                return(true);
+        }
         return true;
     }
 }

@@ -3,10 +3,7 @@ package net.huntersharpe.bfhslibrary;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -14,12 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -50,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if(account != null){
+            DatabaseManager dbManager = new DatabaseManager();
+            dbManager.setUpInDb(account);
             Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "Welcome Back", Toast.LENGTH_SHORT).show();
@@ -67,14 +61,15 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RC_SIGN_IN){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            Log.i(TAG, "Activity Result");
             handleSignInResult(task);
         }
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask){
-        Log.i(TAG, "Handling Sign In");
+        DatabaseManager dbManager = new DatabaseManager();
+        dbManager.setUpInDb(completedTask.getResult());
         Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
         startActivity(intent);
         Toast.makeText(getBaseContext(), "Success!", Toast.LENGTH_SHORT).show();
     }
+
 }
